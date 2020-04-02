@@ -1,0 +1,358 @@
+\ProvidesPackage{preamble}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage[usenames, dvipsnames]{xcolor}
+\usepackage[americanresistors,americaninductors]{circuitikz}
+\usepackage{ifthen}
+\usepackage{amsmath}
+\usepackage[top=10mm, bottom=10mm, left=25.4mm, right=25.4mm,includehead,includefoot]{geometry}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{float}
+\usepackage{scalerel}
+\usepackage{ltxtable}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{filecontents}
+\usepackage{mathtools}
+\usepackage{ltxtable}
+\usepackage{tikz}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage{pgfplots}
+\usepackage{mhchem}
+\newcommand{\defined}{\overset{\underset{\mathrm{def}}{}}{=}}
+\DeclareMathOperator{\di}{d\!}
+\newcommand*\Eval[3]{\left.#1\right\rvert_{#2}^{#3}}
+\usepackage{amsthm}
+\usepackage{stackengine}
+\newcommand\momentL[1]{\stackengine{-.3ex}{#1}{\CAL}{0}{c}{F}{F}{L}}
+\newcommand\CAL{\scalebox{2}{\rotatebox[origin=center]{90}{$\circlearrowleft$}}}
+\newcommand\momentR[1]{\stackengine{-.3ex}{#1}{\CAR}{0}{c}{F}{F}{L}}
+\newcommand\CAR{\scalebox{2}{\rotatebox[origin=center]{90}{$\circlearrowright$}}}
+\stackMath
+\sisetup{range-phrase=-,range-units=single}
+
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\pgfplotsset{height=10cm,width=10cm,compat=1.14}
+\usetikzlibrary{circuits.ee.IEC}
+
+
+\tikzset{circuit declare symbol = ac current source}
+\tikzset{
+          ac current source IEC graphic/.style={
+            circuit symbol lines,
+            circuit symbol size = width 2 height 2,
+            shape = generic circle IEC,
+            /pgf/generic circle IEC/before background={
+              \pgfpathmoveto{\pgfpoint{-0.8pt}{0pt}}
+              \pgfpathsine{\pgfpoint{0.4pt}{0.4pt}}
+              \pgfpathcosine{\pgfpoint{0.4pt}{-0.4pt}}
+              \pgfpathsine{\pgfpoint{0.4pt}{-0.4pt}}
+              \pgfpathcosine{\pgfpoint{0.4pt}{0.4pt}}
+              \pgfusepath{stroke}
+            },
+            transform shape
+          }
+}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\cis}{\mathrm{cis}}
+\newcommand{\vi}{\vec{\imath}}
+\newcommand{\vj}{\vec{\jmath}}
+\newcommand{\vk}{\vec{k}}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage[framed, numbered]{matlab-prettifier}
+\usepackage{fancyhdr}
+\usepackage{amsthm}
+\usepackage[shortlabels]{enumitem}
+\usepackage{pgfplotstable}
+\usepackage[]{graphics}
+\DeclareMathOperator{\sinc}{sinc}
+\DeclareMathOperator{\cosc}{cosc}
+
+\usetikzlibrary{decorations.pathreplacing,decorations.markings}
+\tikzset{
+  % style to apply some styles to each segment of a path
+  on each segment/.style={
+    decorate,
+    decoration={
+      show path construction,
+      moveto code={},
+      lineto code={
+        \path [#1]
+        (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);
+      },
+      curveto code={
+        \path [#1] (\tikzinputsegmentfirst)
+        .. controls
+        (\tikzinputsegmentsupporta) and (\tikzinputsegmentsupportb)
+        ..
+        (\tikzinputsegmentlast);
+      },
+      closepath code={
+        \path [#1]
+        (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);
+      },
+    },
+  },
+  % style to add an arrow in the middle of a path
+  mid arrow/.style={postaction={decorate,decoration={
+        markings,
+        mark=at position .5 with {\arrow[#1]{stealth}}
+      }}},
+}
+
+\DeclareSIUnit\grates{grates}
+\newcommand{\defi}{\overset{\underset{\mathrm{def}}{}}{=}}
+
+
+\newcommand{\findmax}[1]{
+    \pgfplotsforeachungrouped \table in {#1} {%
+        \pgfplotstablevertcat{\concatenated}{\table}%
+    }%
+    \pgfplotstablesort[sort key={1},sort cmp={float >}]{\sorted}{\concatenated}%
+    \pgfplotstablegetelem{0}{1}\of{\sorted}%
+    \let\ymax=\pgfplotsretval%
+}
+
+\newcommand{\findmin}[1]{
+    \pgfplotsforeachungrouped \table in {#1} {%
+        \pgfplotstablevertcat{\concatenated}{\table}%
+    }%
+    \pgfplotstablesort[sort key={1},sort cmp={float <}]{\sorted}{\concatenated}%
+    \pgfplotstablegetelem{0}{1}\of{\sorted}%
+    \let\ymin=\pgfplotsretval%
+}
+
+\makeatletter \renewcommand\d[1]{\ensuremath{%
+  \;\mathrm{d}#1\@ifnextchar\d{\!}{}}}
+\makeatother
+
+\colorlet{Tangent}{blue!75!black}
+\usetikzlibrary{
+        calc,
+        intersections,
+        math,
+    }
+    \makeatletter
+        \def\parsenode[#1]#2\pgf@nil{%
+            \tikzset{label node/.style={#1}}
+            \def\nodetext{#2}
+        }
+        \tikzset{
+            % define style for the points
+            Point/.style={
+                shape=circle,
+                inner sep=0pt,
+                minimum size=3pt,
+            },
+            add node at x/.style 2 args={
+                name path global=plot line,
+                /pgfplots/execute at end plot visualization/.append={
+                        \begingroup
+                        \@ifnextchar[{\parsenode}{\parsenode[]}#2\pgf@nil
+                    \path [name path global = position line #1-1]
+                        ({axis cs:#1,0}|-{rel axis cs:0,0}) --
+                        ({axis cs:#1,0}|-{rel axis cs:0,1});
+                    \path [xshift=1pt, name path global = position line #1-2]
+                        ({axis cs:#1,0}|-{rel axis cs:0,0}) --
+                        ({axis cs:#1,0}|-{rel axis cs:0,1});
+                    \path [
+                        name intersections={
+                            of={plot line and position line #1-1},
+                            name=left intersection
+                        },
+                        name intersections={
+                            of={plot line and position line #1-2},
+                            name=right intersection
+                        },
+                        label node/.append style={pos=1}
+                    ] (left intersection-1) -- (right intersection-1)
+                        node [label node]{\nodetext};
+                    % ---------------------------------------------------------
+                    % draw the tangent line from a bit right of the point on
+                    % the curve to the intersection with the ordinate
+                    % and draw the corresponding points
+                    \draw [Tangent] let
+                        \p1=($ (left intersection-1) - (right intersection-1) $),
+                        \p2=($ (left intersection-1)!sign(#1)*5mm!(right intersection-1) $),
+                        \p3=($ ({axis cs:0,0}) - (\p2) $),
+                        \n1={\x3/\x1}
+                    in
+                        (\p2) -- +($ {\n1}*(\x1,\y1) $)
+%                            node [Point,fill=Tangent] (origin intersection) {}
+%                            node [Point,fill=Curve] at (left intersection-1) {}
+                    ;
+%                    % ----------
+%                    % draw the horizontal line at the curve intersection point
+%                    % plus the label above/below the line
+%                    \tikzmath{
+%                        coordinate \c1;
+%                        \c1=(left intersection-1) - (right intersection-1);
+%                        \slope=\cy1/\cx1*sign(#1);
+%                    }
+%                    \pgfmathsetmacro{\AboveBelow}{ \slope>0 ? "above" : "below" }
+%                    \draw [dotted]
+%                        ([xshift=sign(#1)*2.5mm] left intersection-1) --
+%                        (left intersection-1) --
+%                            node [\AboveBelow,node font=\scriptsize] {$f(x)$}
+%                        (left intersection-1 -| origin intersection) --
+%                        +($ sign(#1)*(-2.5mm,0) $)
+%                            coordinate [pos=0.5] (a)
+%                    ;
+%                    % draw the horizontal line at the ordinate intersection point
+%                    \draw [dotted] (origin intersection)
+%                        +($ sign(#1)*(-2.5mm,0) $) --
+%                        (origin intersection);
+%                    % draw vertical line left/right of the ordinate
+%                    \pgfmathsetmacro{\LeftRight}{ #1<0 ? "right" : "left" }
+%                    \draw [stealth-stealth] (origin intersection)
+%                        +($ sign(#1)*(-1.25mm,0) $) -- (a)
+%                            node [midway,\LeftRight,node font=\scriptsize] {$p$}
+%                    ;
+%                    % ---------------------------------------------------------
+                        \endgroup
+                },
+            },
+        }
+    \makeatother
+
+
+\makeatletter
+\pgfplotsset{
+    /tikz/max node/.style={,
+        anchor=south west,
+    },
+    /tikz/min node/.style={
+        anchor=north,
+        name=minimum
+    },
+    mark min/.style={
+        point meta rel=per plot,
+        visualization depends on={x \as \xvalue},
+        scatter/@pre marker code/.code={%
+            \ifx\pgfplotspointmeta\pgfplots@metamin
+                \def\markopts{}%
+                \coordinate (minimum);
+                \node [min node] {
+                    (\pgfmathprintnumber[fixed]{\xvalue},%
+                    \pgfmathprintnumber[fixed]{\pgfplotspointmeta})
+                };
+            \else
+                \def\markopts{mark=none}
+            \fi
+            \expandafter\scope\expandafter[\markopts,every node near coord/.style=green]
+        },%
+        scatter/@post marker code/.code={%
+            \endscope
+        },
+        scatter,
+    },
+    mark max/.style={
+        point meta rel=per plot,
+        visualization depends on={x \as \xvalue},
+        scatter/@pre marker code/.code={%
+        \ifx\pgfplotspointmeta\pgfplots@metamax
+            \def\markopts{}%
+            \coordinate (maximum);
+            \node [max node] {
+                (\pgfmathprintnumber[fixed]{\xvalue},%
+                \pgfmathprintnumber[fixed]{\pgfplotspointmeta})
+            };
+        \else
+            \def\markopts{mark=none}
+        \fi
+            \expandafter\scope\expandafter[\markopts]
+        },%
+        scatter/@post marker code/.code={%
+            \endscope
+        },
+        scatter
+    }
+}
+\makeatother
+
+\newenvironment{polynomial}
+  {\par\vspace{\abovedisplayskip}%
+   \setlength{\leftskip}{\parindent}%
+   \setlength{\rightskip}{\leftskip}%
+   \medmuskip=4mu plus 2mu minus 2mu
+   \binoppenalty=0
+   \noindent$\displaystyle}
+  {$\par\vspace{\belowdisplayskip}}
+
+\usepackage{hyperref}
+\makeatletter
+\newcommand\appendix@section[1]{%
+  \refstepcounter{section}%
+  \orig@section*{Appendix \@Alph\c@section: #1}%
+  \addcontentsline{toc}{section}{Appendix \@Alph\c@section: #1}%
+}
+\let\orig@section\section
+\g@addto@macro\appendix{\let\section\appendix@section}
+\makeatother
+
+
+\usepackage{array}
+\usepackage{minted}
+
+\usetikzlibrary{decorations.pathreplacing,decorations.markings}
+\tikzset{
+  % style to apply some styles to each segment of a path
+  on each segment/.style={
+    decorate,
+    decoration={
+      show path construction,
+      moveto code={},
+      lineto code={
+        \path [#1]
+        (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);
+      },
+      curveto code={
+        \path [#1] (\tikzinputsegmentfirst)
+        .. controls
+        (\tikzinputsegmentsupporta) and (\tikzinputsegmentsupportb)
+        ..
+        (\tikzinputsegmentlast);
+      },
+      closepath code={
+        \path [#1]
+        (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);
+      },
+    },
+  },
+  % style to add an arrow in the middle of a path
+  mid arrow/.style={postaction={decorate,decoration={
+        markings,
+        mark=at position .5 with {\arrow[#1]{stealth}}
+      }}},
+}
+
+\usepackage{url}
+\usepackage[square,numbers]{natbib}
+\bibliographystyle{abbrvnat}
+\usepackage[nottoc]{tocbibind}
+\usepackage{pdfpages}
+\usepackage{fontspec}
+\usepackage{sectsty}
+
+\usepackage{gensymb}
+\usepackage{graphicx}% Include figure files
+\usepackage{dcolumn}% Align table columns on decimal point
+\usepackage{bm}

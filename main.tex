@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\usepackage{preamble}
+
+\title{}
+\pagestyle{fancy}
+\linespread{1}
+\fancyfoot[LE,RO]{\thepage}
+\fancyfoot[RE,LO]{\ifthenelse{\value{page}=0}{}{}}
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} 
+\begin{flushright}
+\includegraphics[width=0.3\textwidth]{usydNew.png}\\[2cm]
+\end{flushright}
+
+\center 
+
+
+\textsc{\LARGE The University of Sydney}\\[0.75cm]
+\textsc{\Large School of Aerospace, Mechanical and Mechatronic Engineering}\\[1cm]
+
+\textsc{\Large Subject}\\[0.25cm] 
+\textsc{\large Assignment No.}\\[1cm] 
+
+
+\HRule \\[0.4cm]
+{ \huge \bfseries Title}\\[0.4cm] 
+{\Large Subtitle}\\[0.4cm]
+\HRule \\[1.25cm]
+ 
+
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Author:}\\
+Jack \textsc{Naylor}\\
+\end{flushleft}
+\end{minipage}
+~
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large\emph{}\\
+\textsc{XXXXXXXXX}\\
+\end{flushright}
+\end{minipage}\\[1.5cm]
+
+
+{\large \today}\\[1.5cm]
+
+
+
+\vfill
+
+\end{titlepage}
+\newpage
+\pagenumbering{arabic}
+\cfoot{}
+\rhead{}
+\thispagestyle{fancy}
+\pagestyle{fancy}
+\pagenumbering{roman}
+\setcounter{page}{1}
+\section*{\abstractname}
+
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\listoftables
+\newpage
+\pagenumbering{arabic}
+\section*{Introduction}
+\addcontentsline{toc}{section}{\protect\numberline{}Introduction}
+
+\section{First Section}
+
+
+\section*{Conclusions}
+\addcontentsline{toc}{section}{\protect\numberline{}Conclusion}
+\newpage
+\fancyhead{}
+
+\bibliography{mendeley_v2}
+
+\vspace*{\fill}
+\newpage
+\flushleft
+\appendix
+\section{}
+\end{document}
