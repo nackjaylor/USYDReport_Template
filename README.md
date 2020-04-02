@@ -10,3 +10,4 @@ Download the repository as a .zip file. In Overleaf, click "New Project" -> "Upl
 
 ## Using this with local LaTeX installations:
 Simply unzip the file in the chosen directory and begin typing away!
+
