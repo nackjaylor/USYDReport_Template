@@ -73,7 +73,72 @@ Jack \textsc{Naylor}\\
 \section*{Introduction}
 \addcontentsline{toc}{section}{\protect\numberline{}Introduction}
 
-\section{First Section}
+\subsection{Inserting a figure}
+Check out Figure \ref{example}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.5\textwidth]{"images/half filled mugs"}
+	\caption{Example Figure}
+	\label{example}
+\end{figure}
+
+\subsection{Referencing}
+My reference % \cite{citationkey101}.
+\notetoself{Fix references.}
+
+
+\subsection{Tables}
+Table \ref{Table} is an example.
+
+\begin{table}[H]
+	\centering
+	\raggedright
+	\begin{tabular}{ | p{0.17\linewidth} |
+			p{0.275\linewidth} |
+			p{0.15\linewidth} |
+			p{0.35\linewidth} | } 
+		\hline
+		\textbf{This} & \textbf{is} & \textbf{a}   & \textbf{table.}    \\ \hline
+		&Made&using&\url{latextablegenerator.com} \\ \hline
+		&&& \\ \hline
+		&&& \\ \hline
+		&&& \\ \hline
+		&&& \\ \hline
+		&&& \\ \hline
+	\end{tabular}
+	\caption{Definition of Time Parameters}
+	\label{Table}
+\end{table}
+
+
+
+\subsection{Subfigures}
+
+\begin{figure}[H]
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.9\textwidth]{"images/half filled mugs"}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.9\textwidth]{"images/half filled mugs"}
+	\end{subfigure}
+	\vfill
+	\vspace*{0.5cm}
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.9\textwidth]{"images/half filled mugs"}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.9\textwidth]{"images/half filled mugs"}
+	\end{subfigure}
+	\caption{Example subfigures}
+	\label{subfig}
+\end{figure}
 
 
 \section*{Conclusions}
@@ -82,6 +147,10 @@ Jack \textsc{Naylor}\\
 \fancyhead{}
 
 %\bibliography{bibliography}
+\newpage
+\section{Appendix: Matlab Code for Formatting Figures}
+
+\lstinputlisting{MATLAB/FormatFigure.m}
 
 \vspace*{\fill}
 \newpage
